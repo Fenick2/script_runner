@@ -1,5 +1,6 @@
 import docker
 import sh
+import logs
 from pathlib import Path
 from fastapi import FastAPI
 
@@ -18,13 +19,13 @@ nginx4 = sh.Command("/home/managment/nginx_tpl_4.sh")
 def add_mod_script(scripter: AddModifyScript) -> None:
     """Запускает скрипт конфига по условию"""
     if scripter.domain and scripter.customjs:
-        sh.RunningCommand = nginx1
+        sh.RunningCommand = nginx1()
     elif scripter.domain and not scripter.customjs:
-        sh.RunningCommand = nginx2
+        sh.RunningCommand = nginx2()
     elif scripter.customjs and not scripter.domain:
-        sh.RunningCommand = nginx3
+        sh.RunningCommand = nginx3()
     else:
-        sh.RunningCommand = nginx4
+        sh.RunningCommand = nginx4()
 
 
 def rm_container(name: str) -> str:

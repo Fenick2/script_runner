@@ -12,4 +12,4 @@ pip-selfcheck.json
 *.iml
 out
 gen
-venv
+logs/app.log
