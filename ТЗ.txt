@@ -1,0 +1,230 @@
+ADD
+
+    name - string (req)
+
+    domain - string
+
+    dport - int (req)
+
+    gport - int (req)
+
+    gcontainer - string (req)
+
+    customjs - string
+
+    reserve - string
+
+DELETE
+
+    name - string (req)
+
+    domain - string
+
+    reserve - string
+
+MODIFY
+
+    name - string (req)
+
+    domain - string
+
+    dport - int (req)
+
+    gport - int (req)
+
+    gcontainer - string (req)
+
+    customjs - string
+
+    reserve - string
+
+
+ADD
+    *-----------start-----------*/
+
+				Все из JSON делаем переменными
+
+
+
+				$name = JSON[...]
+
+				$domain  = JSON[...]
+
+				$dport = JSON[...]
+
+				$gport  = JSON[...]
+
+				$gcontainer  = JSON[...]
+
+				$customjs = JSON[...]
+
+				$reserve = JSON[...]
+
+
+
+
+
+				запуск get_ssl_cert.sh
+
+				if ($domain && $customjs) {
+
+					запуск nginx_tpl_1.sh
+
+				} elseif ($domain && !$customjs){
+
+					запуск nginx_tpl_2.sh
+
+				} elseif (!$domain && $customjs){
+
+					запуск nginx_tpl_3.sh
+
+				} else {
+
+					запуск nginx_tpl_4.sh
+
+				}
+
+
+
+				обращение к docker api по localhost
+
+
+
+				/*-----------END-----------*/
+
+				DELETE
+
+
+
+				обращение к docker api по localhost (остановить и удалить контейнер)
+
+
+
+				name - string (req)
+
+				domain - string
+
+				reserve - string
+
+
+
+				if ($domain && $name) {
+
+					запуск del_tpl_1.sh
+
+				} else {
+
+					запуск del_tpl_2.sh
+
+				}
+
+				MODIFY
+
+				/*-----------start-----------*/
+
+				Все из JSON делаем переменными
+
+
+
+				$name = JSON[...]
+
+				$domain  = JSON[...]
+
+				$dport = JSON[...]
+
+				$gport  = JSON[...]
+
+				$gcontainer  = JSON[...]
+
+				$customjs = JSON[...]
+
+				$reserve = JSON[...]
+
+				обращение к docker api по localhost (остановить и удалить контейнер)
+
+				if ($domain) {
+
+					проверить существует ли директории "/etc/letsencrypt/live/" . $domain
+
+					if ($domain_cert == false) {
+
+						запуск get_ssl_cert.sh
+
+					}
+
+
+
+				}
+
+
+
+				if ($domain && $customjs) {
+
+					запуск nginx_tpl_1.sh
+
+				} elseif ($domain && !$customjs){
+
+					запуск nginx_tpl_2.sh
+
+				} elseif (!$domain && $customjs){
+
+					запуск nginx_tpl_3.sh
+
+				} else {
+
+					запуск nginx_tpl_4.sh
+
+				}
+
+
+
+				обращение к docker api по localhost
+
+
+
+				/*-----------END-----------*/
+				
+			
+/home/letsencrypt/....
+/home/managment/nginx_tpl_1.sh
+/home/managment/nginx_tpl_2.sh
+/home/managment/nginx_tpl_3.sh
+/home/managment/nginx_tpl_4.sh
+/home/managment/get_ssl_cert.sh
+/home/managment/fastapi/script.py
+
+
+ADD
+ /*-----------start-----------*/
+
+ обращение к docker api по localhost
+ 
+ docker rm {$name}
+ docker rm {$name}_1 (_1 это префикс, а не неизвестная переменная)
+ docker run -p {$dport}:8080 -e PARAM='{gcontainer}' -e PARAM2=true  macbre/nginx-http3
+ docker run -p {$gport}:8080 -e PARAM='{gcontainer}' -e PARAM3='https://{$name}.example.com/' macbre/nginx-http3
+ 
+ /*-----------END-----------*/
+
+
+ DELETE
+ 
+
+ обращение к docker api по localhost
+ 
+ docker rm {$name}
+ docker rm {$name}_1 (_1 это префикс, а не неизвестная переменная)
+ 
+ /*-----------END-----------*/
+ 
+ 
+ MODIFY
+ 
+ /*-----------start-----------*/    
+ docker rm {$name}
+ docker rm {$name}_1 (_1 это префикс, а не неизвестная переменная)
+ docker run -p {$dport}:8080 -e PARAM='{gcontainer}' -e PARAM2=true  macbre/nginx-http3
+ docker run -p {$gport}:8080 -e PARAM='{gcontainer}' -e PARAM3='https://{$name}.example.com/' macbre/nginx-http3
+ 
+ /*-----------END-----------*/
+
