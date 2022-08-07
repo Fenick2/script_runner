@@ -14,6 +14,8 @@ nginx1 = sh.Command("/home/managment/nginx_tpl_1.sh")
 nginx2 = sh.Command("/home/managment/nginx_tpl_2.sh")
 nginx3 = sh.Command("/home/managment/nginx_tpl_3.sh")
 nginx4 = sh.Command("/home/managment/nginx_tpl_4.sh")
+deltpl1 = sh.Command("/home/managment/del_tpl_1.sh")
+deltpl2 = sh.Command("/home/managment/del_tpl_2.sh")
 
 
 def add_mod_script(scripter: AddModifyScript) -> None:
@@ -65,8 +67,15 @@ def mod_scripter(scripter: AddModifyScript) -> None:
 
 @app.delete("/remove")
 def del_container(container: DelScript):
+    domain = container.domain
     name = container.name
     name_1 = f"{name}_1"
+
+    if domain and name:
+        sh.RunningCommand = deltpl1()
+    else:
+        sh.RunningCommand = deltpl2()
+
     cont = client.containers.get(name)
     if not cont:
         return "Container not exists"
