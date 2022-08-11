@@ -1,9 +1,9 @@
 version: '3'
 services:
-  scr:
-    context: .
+  scripter:
+    image: fenick/scripter:latest
     ports:
       - 8000:8000
     volumes:
-      - $HOME/test/:/app/test/
-      - $HOME/test/logs/:/app/logs/
+      - $HOME/management/:/app/management/
+      - $HOME/management/logs/:/app/logs/
