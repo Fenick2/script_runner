@@ -1,17 +1,19 @@
-FROM python:3.10-slim
+FROM python:slim
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+ENV TZ=Europe/Moscow
 
 WORKDIR /app
 COPY req.txt /app/
-RUN python3 -m venv venv && . venv/bin/activate
-RUN pip install --no-cache-dir --upgrade pip && pip install --no-cache-dir -r /app/req.txt
+RUN pip install -U --no-cache-dir --upgrade pip &&  \
+    pip install -U --no-cache-dir -r /app/req.txt &&  \
+    mkdir /app/logs && mkdir /app/management
 
-COPY . /app/
+COPY *.py /app/
 EXPOSE 8000
 
-ENTRYPOINT ["uvicorn", "api:app", "--reload"]
+CMD ["python3", "-m", "uvicorn", "api:app", "--reload"]
 
-
-# docker run -d -v "$(pwd)"/logs:/app/logs fenick/api_scripter
+# docker build -t scripter:latest .
+# docker run -d -v "$HOME"/management/logs/:/app/logs/ -v "$HOME"/management/:/app/management/ --network host -p 8000:8000 --name scr scripter:latest

@@ -8,8 +8,8 @@ class Scripter(BaseModel):
 class AddModifyScript(Scripter):
 
     domain: str = None
-    dport: int = Field(8080, title="host_port")
-    gport: str = Field('8080/tcp', title="cont_port")
+    dport: int = 8080
+    gport: int = 8080
     gcontainer: str = Field(..., title="container")
     customjs: str = None
     reserve: str = None

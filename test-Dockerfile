@@ -1,0 +1,19 @@
+FROM python:slim
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV TZ=Europe/Moscow
+
+WORKDIR /app
+COPY req.txt /app/
+RUN pip install -U --no-cache-dir --upgrade pip &&  \
+    pip install -U --no-cache-dir -r /app/req.txt &&  \
+    mkdir /app/logs && mkdir /app/test
+
+COPY *.py /app/
+EXPOSE 8000
+
+CMD ["python3", "-m", "uvicorn", "api_test:app", "--reload"]
+
+# docker build -t scr .
+# docker run -d -v "$HOME"/test/logs/:/app/logs/ -v "$HOME"/test/:/app/test/ --network host -p 8000:8000 --name scr scr:latest

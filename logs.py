@@ -15,4 +15,4 @@ logger.setLevel(logging.WARNING)
 
 
 def track(message):
-    logger.info(message)
+    logger.warning(message)
