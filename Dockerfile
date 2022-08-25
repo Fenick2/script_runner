@@ -13,7 +13,7 @@ RUN pip install -U --no-cache-dir --upgrade pip &&  \
 COPY *.py /app/
 EXPOSE 8000
 
-CMD ["python3", "-m", "uvicorn", "api:app", "--reload"]
+CMD ["python3", "-m", "uvicorn", "api:app"]
 
 # docker build -t scripter:latest .
-# docker run -d -v "$HOME"/management/logs/:/app/logs/ -v "$HOME"/management/:/app/management/ --network host -p 8000:8000 --name scr scripter:latest
+# docker run -d -v "$HOME"/management/logs/:/app/logs/ -v "$HOME"/management/:/app/management/ --network host -p 8000:8000 --name scripter fenick/scripter:latest
