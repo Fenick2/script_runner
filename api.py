@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from loguru import logger
 
 from schemas import AddModifyScript, DelScript
+from config import ROOT_PATH
 
 logger.add("./logs/api.log", format="{time} {level} {message}",
            level="ERROR", rotation="100 KB",
@@ -12,14 +13,14 @@ logger.info("App started.")
 app = FastAPI()
 
 
-nginx1 = sh.Command("./management/nginx_tpl_1.sh")
-nginx2 = sh.Command("./management/nginx_tpl_2.sh")
-nginx3 = sh.Command("./management/nginx_tpl_3.sh")
-nginx4 = sh.Command("./management/nginx_tpl_4.sh")
-deltpl1 = sh.Command("./management/del_tpl_1.sh")
-deltpl2 = sh.Command("./management/del_tpl_2.sh")
-getssl = sh.Command("./management/get_ssl_cert.sh")
-checkssl = sh.Command("./management/check_ssl_cert.sh")
+nginx1 = sh.Command(ROOT_PATH / 'nginx_tpl_1.sh')
+nginx2 = sh.Command(ROOT_PATH / 'nginx_tpl_2.sh')
+nginx3 = sh.Command(ROOT_PATH / 'nginx_tpl_3.sh')
+nginx4 = sh.Command(ROOT_PATH / 'nginx_tpl_4.sh')
+deltpl1 = sh.Command(ROOT_PATH / 'del_tpl_1.sh')
+deltpl2 = sh.Command(ROOT_PATH / 'del_tpl_2.sh')
+getssl = sh.Command(ROOT_PATH / 'get_ssl_cert.sh')
+checkssl = sh.Command(ROOT_PATH / 'check_ssl_cert.sh')
 
 
 def add_mod_script(scripter: AddModifyScript) -> None:
